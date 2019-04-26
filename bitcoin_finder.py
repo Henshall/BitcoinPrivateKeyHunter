@@ -17,8 +17,8 @@ import time
 import addresses
 import env
 
-def send(pub, pri, address, amount):
-        text = env.email_text + "\n PUBLIC KEY = " + pub + "\n PRIVATE KEY = " + pri + "\n ADDRESS = " + address
+def send(pub, pri, address, import_format):
+        text = env.email_text + "\n PUBLIC KEY = " + pub + "\n PRIVATE KEY = " + pri + "\n ADDRESS = " + address + "\n Wallet Import Format Private Key: = " + import_format + "\n NOTE: PUBLIC KEY MAY NEED TO BE ALL UPPER CASE"
         server = smtplib.SMTP(env.SMTP_HOST, env.SMTP_PORT)
         server.ehlo()
         server.starttls()
@@ -65,17 +65,13 @@ def address(pubkey):
 
 def main():
     i = 0
-    data = [0, 0, 0]
+    data = [0, 0, 0, 0]
     while i < 9000000:
         data[0] = prikey()
         data[1] = pubkey(data[0])
         data[2] = address(data[1])
-        # data[2] ="1BamMXZBPLMwBT3UdyAAKy3ctGDbXNKoXk"
-        datas = (
-            "\nAddress: " + str(data[2]) + "\n" + "Private Key: " +
-            str(data[0]) + "\n" + "Wallet Import Format Private Key: " +
-            str(Key.from_hex(data[0]).to_wif()) + "\n" + "Public Key: " + str(
-                data[1]).upper() + "\n" )
+        data[3] = str(Key.from_hex(data[0]).to_wif())
+        #data[2] ="1BamMXZBPLMwBT3UdyAAKy3ctGDbXNKoXk"
 
         for item in addresses.addresses:        # Second Example
             i = i + 1
@@ -84,13 +80,19 @@ def main():
                 print("PUBLIC KEY = " + data[1])
                 print("PRIVATE KEY = " + data[0])
                 print("ADDRESS = " + data[2])
-                print(datas)
+                print("Wallet Import Format Private Key = " + data[3] )
+                send(data[0], data[1], data[2], data[3])
                 try:
-                    send(data[0], data[1], data[2], "some amount")
+                    send(data[0], data[1], data[2], data[3])
                 except Exception as e:
                     print("looks like sending email failed")
                 fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
-                fl.write(datas)
+                fl.write("FOUND SOMETHING INTERESTING \n")
+                fl.write("PUBLIC KEY = " + data[1] + "\n")
+                fl.write("PRIVATE KEY = " + data[0] + "\n")
+                fl.write("ADDRESS = " + data[2] + "\n")
+                fl.write("Wallet Import Format Private Key: = " + data[3] + "\n")
+                fl.write("NOTE: PUBLIC KEY MAY NEED TO BE ALL UPPER CASE")
                 fl.close()
 
 
