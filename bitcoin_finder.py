@@ -64,17 +64,13 @@ def address(pubkey):
     return ''.join(result[::-1])
 
 def main():
-    fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
-    fl.write("THIS IS THE TEST")
-    fl.close()
     i = 0
     data = [0, 0, 0]
     while i < 9000000:
         data[0] = prikey()
         data[1] = pubkey(data[0])
         data[2] = address(data[1])
-        data[2] ="1BamMXZBPLMwBT3UdyAAKy3ctGDbXNKoXk"
-
+        # data[2] ="1BamMXZBPLMwBT3UdyAAKy3ctGDbXNKoXk"
         datas = (
             "\nAddress: " + str(data[2]) + "\n" + "Private Key: " +
             str(data[0]) + "\n" + "Wallet Import Format Private Key: " +
@@ -85,14 +81,17 @@ def main():
             i = i + 1
             if data[2] == item:
                 print("FOUND SOMETHING INTERESTING")
-                # print("PUBLIC KEY = " + data[1])
-                # print("PRIVATE KEY = " + data[0])
-                # print("ADDRESS = " + data[2])
-                # print(datas)
-                # send(data[0], data[1], data[2], "some amount")
-                # fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
-                # fl.write(datas)
-                # fl.close()
+                print("PUBLIC KEY = " + data[1])
+                print("PRIVATE KEY = " + data[0])
+                print("ADDRESS = " + data[2])
+                print(datas)
+                try:
+                    send(data[0], data[1], data[2], "some amount")
+                except Exception as e:
+                    print("looks like sending email failed")
+                fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
+                fl.write(datas)
+                fl.close()
 
 
 
