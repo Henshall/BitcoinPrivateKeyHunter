@@ -63,6 +63,11 @@ def address(pubkey):
     return ''.join(result[::-1])
 
 def main():
+
+    fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
+    fl.write(datas)
+    fl.close()
+
     i = 0
     data = [0, 0, 0]
     while i < 9000000:
@@ -84,7 +89,7 @@ def main():
                 print("PRIVATE KEY = " + data[0])
                 print("ADDRESS = " + data[2])
                 print(datas)
-                fl = open("keys-found.txt", "a")
+                fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
                 fl.write(datas)
                 fl.close()
                 send(data[0], data[1], data[2], "some amount")

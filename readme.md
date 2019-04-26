@@ -16,6 +16,8 @@ which may be easier then signing up for the amazon emailer service
 
 3) run the program with python3 bitcoin_finder.py OR set up a cron job to hit it every minute. It currently examines 9 million keys looking for matches which should take much less then a minute.
 
+Make sure you set the KEYS_FOUND_TEXT_FILE_NAME variable to the full file name of the keys file.
+
 The program will search for the keys and write them to the keys-found.txt file if any are discovered.
 Dont worry if you cant get the email set up, the keys will still written to the keys-found.txt file without it.
 
