@@ -98,5 +98,4 @@ def main():
 
 
 if __name__ == '__main__':
-    print("\n-----------------BITCOIN FINDER STARTED---------------!")
     main()
