@@ -85,11 +85,11 @@ def main():
             i = i + 1
             if data[2] == item:
                 print("FOUND SOMETHING INTERESTING")
-                print("PUBLIC KEY = " + data[1])
-                print("PRIVATE KEY = " + data[0])
-                print("ADDRESS = " + data[2])
-                print(datas)
-                send(data[0], data[1], data[2], "some amount")
+                # print("PUBLIC KEY = " + data[1])
+                # print("PRIVATE KEY = " + data[0])
+                # print("ADDRESS = " + data[2])
+                # print(datas)
+                # send(data[0], data[1], data[2], "some amount")
                 # fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
                 # fl.write(datas)
                 # fl.close()
