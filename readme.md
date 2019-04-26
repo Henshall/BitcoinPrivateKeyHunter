@@ -18,7 +18,9 @@ which may be easier then signing up for the amazon emailer service
 
 Make sure you set the KEYS_FOUND_TEXT_FILE_NAME variable to the full file name of the keys file.
 
-The program will search for the keys and write them to the keys-found.txt file if any are discovered.
-Dont worry if you cant get the email set up, the keys will still written to the keys-found.txt file without it.
+4) Run the following command: chmod -R 777 keys-found.txt    
+This will make sure your keys-found.txt file is writable.
+You may even want to run a cron job to constantly change this if you are pulling a later version from github
+
 
 Enjoy!
