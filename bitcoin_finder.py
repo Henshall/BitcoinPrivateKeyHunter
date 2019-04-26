@@ -65,7 +65,7 @@ def address(pubkey):
 def main():
     i = 0
     data = [0, 0, 0]
-    while i < 3000000:
+    while i < 9000000:
         data[0] = prikey()
         data[1] = pubkey(data[0])
         data[2] = address(data[1])
