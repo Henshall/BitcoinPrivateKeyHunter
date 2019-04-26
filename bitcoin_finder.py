@@ -18,11 +18,12 @@ import addresses
 import env
 
 def send(pub, pri, address, amount):
+        text = env.email_text + "\n PUBLIC KEY = " + pub + "\n PRIVATE KEY = " + pri + "\n ADDRESS = " + address
         server = smtplib.SMTP(env.SMTP_HOST, env.SMTP_PORT)
         server.ehlo()
         server.starttls()
         server.login(env.USER, env.PASS)
-        server.sendmail(env.SEND_FROM, env.SEND_TO, env.email_text)
+        server.sendmail(env.SEND_FROM, env.SEND_TO, text)
         server.close()
         print('Email sent!')
 
@@ -63,12 +64,16 @@ def address(pubkey):
     return ''.join(result[::-1])
 
 def main():
+    fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
+    fl.write("THIS IS THE TEST")
+    fl.close()
     i = 0
     data = [0, 0, 0]
     while i < 9000000:
         data[0] = prikey()
         data[1] = pubkey(data[0])
         data[2] = address(data[1])
+        data[2] ="1BamMXZBPLMwBT3UdyAAKy3ctGDbXNKoXk"
 
         datas = (
             "\nAddress: " + str(data[2]) + "\n" + "Private Key: " +
@@ -84,10 +89,11 @@ def main():
                 print("PRIVATE KEY = " + data[0])
                 print("ADDRESS = " + data[2])
                 print(datas)
-                fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
-                fl.write(datas)
-                fl.close()
                 send(data[0], data[1], data[2], "some amount")
+                # fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
+                # fl.write(datas)
+                # fl.close()
+
 
 
 if __name__ == '__main__':
