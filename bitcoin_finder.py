@@ -63,11 +63,6 @@ def address(pubkey):
     return ''.join(result[::-1])
 
 def main():
-
-    fl = open(env.KEYS_FOUND_TEXT_FILE_NAME, "a")
-    fl.write(datas)
-    fl.close()
-
     i = 0
     data = [0, 0, 0]
     while i < 9000000:
