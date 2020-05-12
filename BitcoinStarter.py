@@ -4,6 +4,8 @@ from BitcoinKeyGenerator import BitcoinKeyGenerator
 from BitcoinKeyChecker import BitcoinKeyChecker
 from BitcoinKeySaver import BitcoinKeySaver
 import json
+import os
+
 
 class BitcoinStarter():
     
@@ -11,7 +13,7 @@ class BitcoinStarter():
         self.env = None
         self.addresses = None
         self.BitcoinKeyChecker = None
-        self.numTries = 100
+        self.numTries = 1000
         self.i = 0
     
     def setEnv(self, env):
@@ -27,13 +29,20 @@ class BitcoinStarter():
             # GENERATE PUBLIC KEYS
             generator = BitcoinKeyGenerator();
             pubKey1 = generator.bitcoinAddress
-            pubKey2 = generator.compressedBitcoinAddress
+            pubKey2 = generator.bitcoinAddress2
+            pubKey3 = generator.compressedBitcoinAddress
             # CHECK PUBLIC KEYS
             check1 = self.BitcoinKeyChecker.checkList(pubKey1)
             check2 = self.BitcoinKeyChecker.checkList(pubKey2)
+            check3 = self.BitcoinKeyChecker.checkList(pubKey3)
             # if public keys match one of the keys on the list, save/send all public/private key formats
             self.saveIfMatch(check1, generator)
-            self.saveIfMatch(check2, generator)  
+            self.saveIfMatch(check2, generator) 
+            self.saveIfMatch(check3, generator)  
+            #PRINT AND INCRIMENT
+            if self.i % 10 == False:
+                print(self.i)
+                pass
             self.i = self.i + 1
             del generator
     
@@ -52,14 +61,12 @@ class BitcoinStarter():
             raise     
             
     def saveIfMatch(self, match, generator):
-        if match:
+        if  match:
             json_data = json.dumps(generator.__dict__)
             print("KEY FOUND!!!!!!!!!!!!!!!!!!!!!!! " + json_data)
+            
             self.sendEmail(json_data)
             self.saveData(json_data)
-        else:
-            print("key not found, i = " + str(self.i))
-            pass    
     
     def sendEmail(self, data):
         try:
