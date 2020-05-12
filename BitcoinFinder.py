@@ -7,7 +7,7 @@ import json
 import os
 
 
-class BitcoinStarter():
+class BitcoinFinder():
     
     def __init__(self):
         self.env = None
@@ -18,6 +18,9 @@ class BitcoinStarter():
     
     def setEnv(self, env):
         self.env = env
+        
+    def setNumTimes(self, num):
+        self.numTries = num    
     
     def setAddressList(self, addresses):
         self.addresses = addresses 
@@ -36,21 +39,22 @@ class BitcoinStarter():
             check2 = self.BitcoinKeyChecker.checkList(pubKey2)
             check3 = self.BitcoinKeyChecker.checkList(pubKey3)
             # if public keys match one of the keys on the list, save/send all public/private key formats
-            self.saveIfMatch(check1, generator)
-            self.saveIfMatch(check2, generator) 
-            self.saveIfMatch(check3, generator)  
+            match1 = self.saveIfMatch(check1, generator)
+            match2 = self.saveIfMatch(check2, generator) 
+            match3 = self.saveIfMatch(check3, generator)  
             #PRINT AND INCRIMENT
             if self.i % 10 == False:
                 print(self.i)
                 pass
             self.i = self.i + 1
             del generator
+        if match1 == True or match2 == True or match3 == True :
+            print("MATCH FOUND!!!!!!") 
+        else:
+            print("NO MATCHES FOUND")      
+          
     
     def variableCheck(self):
-        if self.env == None:
-            print("env not set --- env check failed in variableCheck function")
-            print("**********************************************************")
-            raise
         if self.addresses == None:
             print("addresses not set --- addresses check failed in variableCheck function")
             print("**********************************************************")
@@ -58,15 +62,21 @@ class BitcoinStarter():
         if self.BitcoinKeyChecker == None:
             print("BitcoinKeyChecker not set --- BitcoinKeyChecker check failed in variableCheck function")
             print("**********************************************************")
-            raise     
+            raise 
+        if self.numTries < 1:
+            print("Number of times is 0 or less - make sure to set the number of times you want this to run")
+            print("**********************************************************")
+            raise         
             
     def saveIfMatch(self, match, generator):
-        if  match:
+        if match:
             json_data = json.dumps(generator.__dict__)
-            print("KEY FOUND!!!!!!!!!!!!!!!!!!!!!!! " + json_data)
-            
+            print("MATCH FOUND!!!!!!!!!!!!!!!!!!!!!!! " + json_data)
             self.sendEmail(json_data)
             self.saveData(json_data)
+            return True
+        else:
+            return False    
     
     def sendEmail(self, data):
         try:

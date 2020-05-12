@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 import env
 from addresses import addresses
-from BitcoinStarter import BitcoinStarter
+from BitcoinFinder import BitcoinFinder
 
-starter = BitcoinStarter()
-starter.setEnv(env)
-starter.setAddressList(addresses)
-starter.start()
+finder = BitcoinFinder()
+finder.setEnv(env)
+finder.setNumTimes(1000)
+finder.setAddressList(addresses)
+finder.start()
