@@ -3,9 +3,9 @@
 import env
 from addresses import addresses
 from BitcoinFinder import BitcoinFinder
+import json
 
 finder = BitcoinFinder()
 finder.setEnv(env)
-finder.setNumTimes(1000)
-finder.setAddressList(addresses)
+finder.setAddressList(set(addresses))
 finder.start()

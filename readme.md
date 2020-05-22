@@ -15,7 +15,7 @@ python3 example.py
 ```
 
 ## Usage:
-The Bitcoin Finder uses a number of other classes to perform its function. However its main function is to pull everything together so that you can effectively send yourself an email and save any keys you find. Your can hunt for bitcoins with the following:
+The Bitcoin Finder uses a number of other classes to perform its function. However its main function is to pull everything together so that you can effectively send yourself an email and save any keys you find. You can hunt for bitcoins with the following:
 ```python
 finder = BitcoinFinder()
 finder.setEnv(env)

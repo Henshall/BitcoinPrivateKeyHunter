@@ -8,10 +8,7 @@ class BitcoinKeyChecker():
         self.list = list
         
     def checkList(self, key):   
-        for value in self.list:
-            if key == value:
-                return True
-            else:
-                pass
-        return False
+        return(key in self.list)
+    
+        
         
