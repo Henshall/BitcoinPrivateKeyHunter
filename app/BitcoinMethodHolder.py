@@ -99,8 +99,9 @@ class BitcoinMethodHolder():
              
             
     def all_irrational_numbers(self):
+        
         print("starting all_interesting_numbers \n")
-        if self.env.ENVIRONMENT == "production":
+        if self.env.ENVIRONMENT == "testing":
             subLoopAmount = 101
         else:
             subLoopAmount = 2
@@ -112,7 +113,9 @@ class BitcoinMethodHolder():
             numberToCheck = 0
             while numberToCheck < bitcoin.N:
                 numberToCheck = j * number
+                
                 try:
+                    print(int(numberToCheck))
                     self.BitcoinKeyChecker.checkBitcoinGeneratorFromInteger(int(numberToCheck))
                     self.loopNumberCheck( "bit_shift_left", int(numberToCheck), 1, subLoopAmount)
                     self.loopNumberCheck( "bit_shift_right", int(numberToCheck), 1, subLoopAmount)
@@ -121,6 +124,7 @@ class BitcoinMethodHolder():
                     self.loopNumberCheck( "multiply", int(numberToCheck), 1, subLoopAmount)
                     self.loopNumberCheck( "divide", int(numberToCheck), 1, subLoopAmount)
                     self.loopNumberCheck( "root", int(numberToCheck), 1, subLoopAmount)
+                    
                 except Exception as e:
                     pass
                 j = j * 10
@@ -167,10 +171,7 @@ class BitcoinMethodHolder():
                 numberToCheck = number >> i    
             #NOW WE CAN CHECK THE NUMBER AND SEE IF WE FOUND A KEY    
             print("numberToCheck = " + str(int(numberToCheck)))
-            try:
-                self.BitcoinKeyChecker.checkBitcoinGeneratorFromInteger(int(numberToCheck))
-            except Exception as e:
-                pass      
+            self.BitcoinKeyChecker.checkBitcoinGeneratorFromInteger(int(numberToCheck))
             i = i + increaseAmount
             j = j + 1
         return True    

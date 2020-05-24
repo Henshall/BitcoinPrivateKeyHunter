@@ -2,21 +2,18 @@
 import env
 import json
 import pymysql
-
+import env
 
 class BitcoinKeySaver():
     """docstring for BitcoinKeyMailer."""
 
     def __init__(self):        
         print("***************************")
-        self.env = None 
+    
         self.generator = None 
         self.methodName = None
     
         
-    def setEnv(self, env):        
-        self.env = env
-    
     def setMethodName(self, methodName):        
         self.methodName = methodName    
         

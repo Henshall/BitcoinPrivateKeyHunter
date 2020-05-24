@@ -48,6 +48,7 @@ class BitcoinMethodStarter():
                if status == False or status == 0:
                    #Get Search Method
                    print(methodName)
+                   self.BitcoinKeyChecker.setSearchMethod(methodName)
                    #Run Search Method
                    methodHolder = BitcoinMethodHolder(self.BitcoinKeyChecker, self.env, methodName)
                    function=getattr(methodHolder,methodName)
