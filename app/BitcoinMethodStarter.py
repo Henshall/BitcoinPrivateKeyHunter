@@ -17,12 +17,7 @@ class BitcoinMethodStarter():
         self.env = None
         self.addresses = None
         self.i = 0
-        self.methodList = None
-        
-    
-    def setMethodList(self, methodList):
-        self.methodList = methodList
-    
+
     def setEnv(self, env):
         self.env = env    
         
@@ -54,7 +49,7 @@ class BitcoinMethodStarter():
                    #Get Search Method
                    print(methodName)
                    #Run Search Method
-                   methodHolder = BitcoinMethodHolder(self.BitcoinKeyChecker, self.env, methodName, self.methodList)
+                   methodHolder = BitcoinMethodHolder(self.BitcoinKeyChecker, self.env, methodName)
                    function=getattr(methodHolder,methodName)
                    result = function()
                    print("FINISHED " + methodName)
