@@ -19,7 +19,6 @@ The Bitcoin Finder uses a number of other classes to perform its function. Howev
 ```python
 finder = BitcoinFinder()
 finder.setEnv(env)
-finder.setNumTimes(20)
 finder.setAddressList(["pk1", "pk2"])
 finder.start()
 ```

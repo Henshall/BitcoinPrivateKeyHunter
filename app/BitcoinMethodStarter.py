@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-from BitcoinKeyMailer import BitcoinKeyMailer
-from BitcoinKeyGenerator import BitcoinKeyGenerator
-from BitcoinKeyChecker import BitcoinKeyChecker
+from app.BitcoinKeyMailer import BitcoinKeyMailer
+from app.BitcoinKeyGenerator import BitcoinKeyGenerator
+from app.BitcoinKeyChecker import BitcoinKeyChecker
 
-from BitcoinMethodHolder import BitcoinMethodHolder
+from app.BitcoinMethodHolder import BitcoinMethodHolder
 import json
 import os
 import datetime
 import pymysql
 
 
-class BitcoinFinder():
+class BitcoinMethodStarter():
     
     def __init__(self):
         print("initialized bitcoin finder \n")
@@ -34,11 +34,14 @@ class BitcoinFinder():
         self.BitcoinKeyChecker = BitcoinKeyChecker(addresses)   
     
     def start(self):
+        
         self.variableCheck()
+        
         dbTest = self.connectToDatabaseTest()
         db = pymysql.connect(self.env.DBHOST,self.env.DBUSER,self.env.DBPASSWORD,self.env.DBNAME)
         cursor = db.cursor()
         sql = "select * from methods"
+        
         try:
            # Execute the SQL command
            cursor.execute(sql)
@@ -82,12 +85,11 @@ class BitcoinFinder():
             print("BitcoinKeyChecker not set --- BitcoinKeyChecker  check failed in BitcoinFinder variableCheck function")
             print("**********************************************************")
             raise 
-            
+        
         if self.env == None:
             print("env not set --- check failed in BitcoinFinder variableCheck function")
             print("**********************************************************")
-            raise 
-            
+            raise    
         if self.env.DBUSER == None:
             print("env.DBUSER not set --- check failed in BitcoinFinder variableCheck function")
             print("**********************************************************")
@@ -111,7 +113,7 @@ class BitcoinFinder():
         
     def connectToDatabaseTest(self):
         try:
-            db = pymysql.connect(env.DBHOST,env.DBUSER,env.DBPASSWORD,env.DBNAME)
+            db = pymysql.connect(self.env.DBHOST,self.env.DBUSER,self.env.DBPASSWORD,self.env.DBNAME)
             db.close()
             return True
         except Exception as e:
