@@ -25,7 +25,6 @@ class BitcoinKeyGenerator():
             # self.bitcoinAddress = bitcoin.pubkey_to_address(self.public_key)
             # 
             # 
-            # 
             # self.public_key_f_m = bitcoin.fast_multiply(bitcoin.G, self.decoded_private_key)
             # self.hex_encoded_public_key = bitcoin.encode_pubkey(self.public_key_f_m, 'hex')    
             # 
@@ -33,8 +32,9 @@ class BitcoinKeyGenerator():
             # self.bitcoinAddress2 = bitcoin.pubkey_to_address(self.public_key_f_m)
             # self.compressedBitcoinAddress = bitcoin.pubkey_to_address(self.hex_compressed_public_key.encode('utf-8'))
             
+                
         else:
-            print("Invalid Private Key Check Failed!!!\n")
+            print(" Invalid Private Key Check Failed!!! \n")
         
     
     def checkIfPrivateKeyIsValid(self):

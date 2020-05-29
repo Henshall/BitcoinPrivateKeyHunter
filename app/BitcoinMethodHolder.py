@@ -43,7 +43,11 @@ class BitcoinMethodHolder():
         i = max - 1
         while i > max_minus_one_billion:
             print(i)
-            self.BitcoinKeyChecker.checkBitcoinGeneratorFromInteger(i)
+            try:
+                self.BitcoinKeyChecker.checkBitcoinGeneratorFromInteger(i)
+            except Exception as e:
+                pass
+            
             # self.loopNumberCheck( "root", i, 1, 1)
             i = i - 1
                 

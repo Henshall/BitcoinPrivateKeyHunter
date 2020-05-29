@@ -23,12 +23,15 @@ class BitcoinKeyChecker():
         generator = BitcoinKeyGenerator(privateKeyHex)
         print( json.dumps(generator.__dict__) )
         # CHECK PUBLIC KEYS
-        publicKey = generator.public_key
-        check = self.checkList(publicKey)
-        # if public keys match one of the keys on the list, save/send all public/private key formats
-        match = self.saveIfMatch(check, generator) 
-        del generator
         
+        try:
+            publicKey = generator.public_key
+            check = self.checkList(publicKey)
+            # if public keys match one of the keys on the list, save/send all public/private key formats
+            match = self.saveIfMatch(check, generator) 
+            del generator
+        except Exception as e:
+            print(e)
         
         
         # BELOW IS THE WAY TO CHECK AGAINST WIFS

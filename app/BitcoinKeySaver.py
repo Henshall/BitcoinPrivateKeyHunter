@@ -3,6 +3,7 @@ import env
 import json
 import pymysql
 import env
+import time
 
 class BitcoinKeySaver():
     """docstring for BitcoinKeyMailer."""
@@ -34,6 +35,8 @@ class BitcoinKeySaver():
         fl.close()
         
     def saveToDatabase(self):    
+        print("FOUND! SAVING TO DATABASE")
+        time.sleep(2)
         # Open database connection
         db = pymysql.connect(env.DBHOST,env.DBUSER,env.DBPASSWORD,env.DBNAME)
         # prepare a cursor object using cursor() method

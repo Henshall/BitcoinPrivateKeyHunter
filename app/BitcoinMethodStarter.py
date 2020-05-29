@@ -46,7 +46,7 @@ class BitcoinMethodStarter():
         except Exception as e:
            print ("BitcoinMethodStarter Error: unable to fetch data")
            print (e)
-        db.close()
+           raise
             
     def getMethodTableFromDatabase(self):
         db = pymysql.connect(self.env.DBHOST,self.env.DBUSER,self.env.DBPASSWORD,self.env.DBNAME)
