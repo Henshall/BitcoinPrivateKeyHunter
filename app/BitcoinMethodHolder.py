@@ -99,7 +99,6 @@ class BitcoinMethodHolder():
              
             
     def all_irrational_numbers(self):
-        
         print("starting all_interesting_numbers \n")
         if self.env.ENVIRONMENT == "testing":
             subLoopAmount = 101
@@ -113,7 +112,6 @@ class BitcoinMethodHolder():
             numberToCheck = 0
             while numberToCheck < bitcoin.N:
                 numberToCheck = j * number
-                
                 try:
                     print(int(numberToCheck))
                     self.BitcoinKeyChecker.checkBitcoinGeneratorFromInteger(int(numberToCheck))
@@ -124,14 +122,12 @@ class BitcoinMethodHolder():
                     self.loopNumberCheck( "multiply", int(numberToCheck), 1, subLoopAmount)
                     self.loopNumberCheck( "divide", int(numberToCheck), 1, subLoopAmount)
                     self.loopNumberCheck( "root", int(numberToCheck), 1, subLoopAmount)
-                    
                 except Exception as e:
                     pass
                 j = j * 10
             i = i + 1
             j = 1 
             
-        
     def loopNumberCheck(self, type, number, increaseAmount, loopAmount):
         i = 0
         j = 0
@@ -175,6 +171,4 @@ class BitcoinMethodHolder():
             i = i + increaseAmount
             j = j + 1
         return True    
-            
-            
             

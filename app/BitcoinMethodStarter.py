@@ -2,11 +2,7 @@
 from app.BitcoinKeyMailer import BitcoinKeyMailer
 from app.BitcoinKeyGenerator import BitcoinKeyGenerator
 from app.BitcoinKeyChecker import BitcoinKeyChecker
-
 from app.BitcoinMethodHolder import BitcoinMethodHolder
-import json
-import os
-import datetime
 import pymysql
 
 
@@ -29,24 +25,15 @@ class BitcoinMethodStarter():
         self.BitcoinKeyChecker = BitcoinKeyChecker(addresses)   
     
     def start(self):
-        
         self.variableCheck()
-        
-        dbTest = self.connectToDatabaseTest()
-        db = pymysql.connect(self.env.DBHOST,self.env.DBUSER,self.env.DBPASSWORD,self.env.DBNAME)
-        cursor = db.cursor()
-        sql = "select * from methods"
-        
+        self.connectToDatabaseTest()
+        methodTable = self.getMethodTableFromDatabase()
         try:
-           # Execute the SQL command
-           cursor.execute(sql)
-           methodList = cursor.fetchall()
-           for data in methodList:
+           for data in methodTable:
                methodName = data[1]
                status = data[2]
-               # ONLY DO SOMETHING IF STATUS IS FALSE
+               # ONLY RUN METHOD IF IT HASNT BEEN RUN BEFORE
                if status == False or status == 0:
-                   #Get Search Method
                    print(methodName)
                    self.BitcoinKeyChecker.setSearchMethod(methodName)
                    #Run Search Method
@@ -55,58 +42,38 @@ class BitcoinMethodStarter():
                    result = function()
                    print("FINISHED " + methodName)
                    if self.env.ENVIRONMENT == "production":
-                       sql = "UPDATE methods SET status = 1 WHERE methodName = " + "'" + methodName + "'"
-                       try:
-                           cursor = db.cursor()
-                           cursor.execute(sql)
-                           db.commit()
-                       except Exception as e:
-                           print(e)
-                           db.rollback()
-                   
+                       self.updateMethodStatusInDatabase(methodName)
         except Exception as e:
-           print ("BitcoinFinder Error: unable to fetch data")
+           print ("BitcoinMethodStarter Error: unable to fetch data")
            print (e)
-        # disconnect from server
         db.close()
             
-    
+    def getMethodTableFromDatabase(self):
+        db = pymysql.connect(self.env.DBHOST,self.env.DBUSER,self.env.DBPASSWORD,self.env.DBNAME)
+        cursor = db.cursor()
+        sql = "select * from methods"
+        cursor.execute(sql)
+        return cursor.fetchall()
+        
+    def updateMethodStatusInDatabase(self,methodName):
+        sql = "UPDATE methods SET status = 1 WHERE methodName = " + "'" + methodName + "'"
+        try:
+            db = pymysql.connect(self.env.DBHOST,self.env.DBUSER,self.env.DBPASSWORD,self.env.DBNAME)
+            cursor = db.cursor()
+            cursor.execute(sql)
+            db.commit()
+            db.close()
+        except Exception as e:
+            print(e)
+            db.rollback()
+            db.close()
     
     def variableCheck(self):
-        if self.addresses == None:
-            print("addresses not set --- addresses  check failed in BitcoinFinder variableCheck function")
-            print("**********************************************************")
-            raise  
-        if self.BitcoinKeyChecker == None:
-            print("BitcoinKeyChecker not set --- BitcoinKeyChecker  check failed in BitcoinFinder variableCheck function")
-            print("**********************************************************")
-            raise 
-        
-        if self.env == None:
-            print("env not set --- check failed in BitcoinFinder variableCheck function")
-            print("**********************************************************")
-            raise    
-        if self.env.DBUSER == None:
-            print("env.DBUSER not set --- check failed in BitcoinFinder variableCheck function")
-            print("**********************************************************")
-            raise 
-        
-        if self.env.DBPASSWORD == None:
-            print("env.DBPASSWORD not set --- check failed in BitcoinFinder variableCheck function")
-            print("**********************************************************")
-            raise  
-        
-        if self.env.DBHOST == None:
-            print("env.DBHOST not set --- check failed in BitcoinFinder variableCheck function")
-            print("**********************************************************")
-            raise             
-        
-        if self.env.DBNAME == None:
-            print("env.DBNAME not set --- check failed in BitcoinFinder variableCheck function")
-            print("**********************************************************")
+        if self.addresses == None or self.BitcoinKeyChecker == None or self.env == None or self.env.DBUSER == None or self.env.DBPASSWORD == None or self.env.DBHOST == None or self.env.DBNAME == None:
+            print("This will throw an error automatically if one of the following variables is undefined")
             raise
-    
-        
+        return True    
+            
     def connectToDatabaseTest(self):
         try:
             db = pymysql.connect(self.env.DBHOST,self.env.DBUSER,self.env.DBPASSWORD,self.env.DBNAME)
